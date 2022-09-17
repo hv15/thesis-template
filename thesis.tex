@@ -1,0 +1,120 @@
+\documentclass[b5paper,12pt,twoside,openright,english]{book}
+
+% font, reuse ACM style
+\usepackage[tt=false,type1=true]{libertine}
+\usepackage[varqu]{zi4}
+\usepackage[libertine]{newtxmath}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% lang and kerning
+\usepackage{babel}
+\usepackage{microtype}
+% disable for saxpsa APL font (seems to be no longer
+% a problem since June 2022)
+%\microtypesetup{expansion=false}
+
+% overfull warnings aid
+\overfullrule=10pt
+\usepackage{hyphenat}
+
+\usepackage{csquotes}
+\usepackage[%
+    backend=biber,
+    hyperref=true,
+    style=numeric,
+    sortcites=true,
+    defernumbers=true,
+    refsegment=chapter,
+    alldates=long,
+    backref=true,
+    datamodel=archiving]{biblatex}
+\newcommand{\titlecite}[1]{\citetitle*{#1}~\cite{#1}}
+
+\usepackage{mathtools}
+% what unholy nonsense is this, why not B5?!?!?!
+\usepackage[headheight=15pt]{geometry}
+\usepackage[section,verbose]{placeins}
+\usepackage{rotating}
+% not needed at RU
+%\usepackage[onehalfspacing]{setspace}
+%\usepackage{appendix}
+\usepackage[inline]{enumitem}
+\usepackage{hyperref}
+
+\providecommand{\topdir}{.} % this is needed to get chapter compilation
+                            % working on its own.
+% we define configure in the conf/ directory - all *.tex files there
+% are concatenated together into conf.tex!
+\input{\topdir/conf.tex}
+
+% add watermark TODO remove on final submission
+% FIXME causes everypage warning!
+%\usepackage[firstpageonly]{draftwatermark}
+%\SetWatermarkText{Draft}
+%\SetWatermarkScale{2}
+
+% must be last
+\usepackage{cleveref}
+\usepackage{subfiles}
+
+% bibliography
+\NewBibliographyString{archivedat,archivedon}
+\DefineBibliographyStrings{english}{%
+  archivedat = {archived at},
+  archivedon = {on},
+}
+
+\DeclareFieldFormat{archiveurl}{\bibstring{archivedat}\space\url{#1}}
+\DeclareFieldFormat{archivedate}{\bibstring{archivedon}\space#1}
+
+\newbibmacro*{archiveurl}{\printfield{archiveurl}}
+\newbibmacro*{archivedate}{\printarchivedate}
+
+\renewbibmacro*{url+urldate}{%
+  \usebibmacro{url}%
+  \iffieldundef{urlyear}
+    {}
+    {\setunit*{\addspace}%
+     \usebibmacro{urldate}}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{archiveurl}%
+  \iffieldundef{archiveyear}
+    {}
+    {\setunit*{\addspace}%
+     \usebibmacro{archivedate}}}
+
+\addglobalbib{\topdir/references.bib}
+\defbibheading{chapterbibliography}{%
+    \chapter*{Bibliography for Chapter~\therefsegment}%
+}
+
+\input{version}
+
+\begin{document}
+
+\frontmatter
+
+% titlepage
+\include{title}
+
+% lists
+\tableofcontents{}
+\listoffigures{}
+\listoftables{}
+\listofalgorithms{}
+
+\mainmatter{}
+
+% chapter inputs (must use \input!)
+\input{\topdir/input.tex}
+
+\backmatter{}
+
+% ack
+\include{\topdir/acknowledgements.tex}
+
+% references
+\printbibliography[heading=bibintoc]{}
+
+\end{document}

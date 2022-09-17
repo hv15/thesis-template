@@ -1,0 +1,23 @@
+\providecommand{\topdir}{..} % reset all paths to location of thesis.tex
+\documentclass[../thesis.tex]{subfiles}
+
+% this is defined in thesis.tex already, so just in case
+% we compile locally, we have the correct directory path.
+\providecommand{\subdir}{.}
+
+\begin{document}
+\chapter{Introduction}
+
+This is the introduction, \emph{clearly}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{diagrams/falling_1.png}
+    \caption[Example of Falling]{Example of falling taken from~\cite{ShuS2021}}
+    \label{ch1:fig:falling1}
+\end{figure}
+
+\ifSubfilesClassLoaded{%
+    \printbibliography[heading=chapterbibliography,segment=\therefsegment]
+}{}
+\end{document}

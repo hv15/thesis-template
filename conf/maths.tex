@@ -1,0 +1,30 @@
+% we assume that amsmath/mathtools is loaded
+
+% formulism stuff
+% remember to use stared `*' version as these will use \left \right auto-sizing for delimiters.
+%% should not be called directly
+\DeclarePairedDelimiterX{\transform}[1]{\lbrace}{\rbrace}{\mathopen{}#1}
+\DeclarePairedDelimiterX{\tresult}[1]{\lbrace}{.}{\;#1\;}
+\DeclarePairedDelimiterX{\tuple}[1]{\langle}{\rangle}{\,#1\,}
+\DeclarePairedDelimiterX{\collection}[1]{\llangle}{\rrangle}{\;#1\;}
+\DeclarePairedDelimiterX{\group}[1]{\lgroup}{\rgroup}{\;#1\;}
+\DeclarePairedDelimiterX{\fun}[1]{\lparen}{\rparen}{\;#1\;}
+\newcommand{\listitem}[1]{&\bm{:}#1\\}
+\NewDocumentCommand{\alignedlist}{>{\SplitList{,}}m}{\begin{aligned}\ProcessList{#1}{\listitem}\end{aligned}}
+\newcommand{\envitem}[1]{\ #1}
+\NewDocumentCommand{\env}{>{\SplitList{,}}m}{\ProcessList{#1}{\envitem}}
+%% primary formalism
+%% XXX we need to phase these two out
+\NewDocumentCommand{\PHASE}{omm}{\mathrm{#2}\;\IfNoValueTF{#1}{\transform*{#3}}{\transform*{#3}\alignedlist{#1}}}
+\NewDocumentCommand{\TRANS}{m}{\tresult*{#1}}
+%% new formalism
+\NewDocumentCommand{\nPHASE}{omm}{\mathbf{#2}\IfNoValueTF{#1}{\transform*{#3}}{\transform*{#3}_{\env{#1}}}}
+\NewDocumentCommand{\nTRANS}{m}{#1}
+\NewDocumentCommand{\nVAL}{mm}{#1\!:\!\mathtt{#2}}
+\NewDocumentCommand{\nCAT}{mm}{#1\!\mathrel{+}\mathrel{+}\!#2}
+\NewDocumentCommand{\nPLUS}{mm}{#1\!\mathrel{\oplus}\!#2}
+\NewDocumentCommand{\APPLY}{omm}{\mathcal{#2}\;\IfNoValueTF{#1}{\function*{#3}}{\functionap*{#3}{#1}}}
+\NewDocumentCommand{\TUPLE}{m}{\hookrightarrow\collection*{\alignedlist{#1}}} % code-attributes
+\NewDocumentCommand{\COLL}{m}{\tuple*{#1}} % code-attributes
+\newcommand{\sem}[1]{\llbracket#1\rrbracket}
+\newcommand{\shp}[1]{\ensuremath{\big\lvert#1\big\rvert}}

@@ -1,0 +1,18 @@
+\providecommand{\topdir}{..} % reset all paths to location of thesis.tex
+\documentclass[../thesis.tex]{subfiles}
+
+% this is defined in thesis.tex already, so just in case
+% we compile locally, we have the correct directory path.
+\providecommand{\subdir}{.}
+
+\begin{document}
+\chapter{Example Chapter}
+
+\section{Overview}
+
+This is an example chapter.
+
+\ifSubfilesClassLoaded{%
+    \printbibliography[heading=chapterbibliography,segment=\therefsegment]
+}{}
+\end{document}

@@ -1,0 +1,20 @@
+\usepackage{pgfplots}
+\pgfplotsset{%
+    width=7cm,
+    compat/show suggested version=false,
+    compat=1.14
+}
+\usepgfplotslibrary{%
+  units, % Allows to enter the units nicely
+  groupplots
+}
+\usepackage{pgfplotstable}
+
+%% these are taken from diagrams.tikzstyles and match those used in the diagrams.
+\usetikzlibrary{positioning,decorations.pathmorphing,shapes,shapes.geometric}
+\tikzstyle{Sync}=[fill={rgb,255: red,255; green,128; blue,0}, draw=black, shape=regular polygon, regular polygon sides=5, inner sep=2.25pt]
+\tikzstyle{Access}=[fill={rgb,255: red,68; green,68; blue,68}, draw=black, shape=diamond, inner sep=2pt]
+\tikzstyle{Alloc}=[fill={rgb,255: red,191; green,0; blue,64}, draw=black, shape=regular polygon, regular polygon sides=3, inner sep=1.5pt]
+\tikzstyle{KnlLaunch}=[fill=white, draw=black, shape=star, star points=6, inner sep=2pt]
+\tikzstyle{HtoD}=[fill={rgb,255: red,88; green,181; blue,78}, draw=black, shape=circle, inner sep=2pt]
+\tikzstyle{DtoH}=[fill={rgb,255: red,84; green,96; blue,203}, draw=black, shape=rectangle, inner sep=2.75pt]

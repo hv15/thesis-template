@@ -1,0 +1,6 @@
+\DeclareDatamodelFields[type=field, datatype=uri]{archiveurl}
+\DeclareDatamodelEntryfields{archiveurl}
+\DeclareDatamodelFields[type=field, datatype=date, skipout]{
+  archivedate,
+}
+\DeclareDatamodelEntryfields{archivedate}

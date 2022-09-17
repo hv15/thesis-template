@@ -1,0 +1,71 @@
+%% listings
+\usepackage{listings}
+\lstdefinelanguage{SaC}[]{C}{%
+    morekeywords={print,shape,dim,with,fold,modarray,genarray,+,-,=,*,
+                  /,\%,_dev_alloc_,_dev_reuse_,_alloc_or_reuse_,_reuse_,
+                  _dev_decRC_,_device2host_,_host2device_,->,_host2device_end_,
+                  _device2host_end_},
+    moredirectives={noinline},
+}
+\lstdefinelanguage{CUDA}[]{C++}{%
+    morekeywords={cudaMalloc,cudaFree,cudaHostAlloc,cudaFreeHost,cudaHostRegister,
+                  cudaHostUnregister,cudaMallocManaged,cudaMemcpy,cudaAsyncMemcpy,
+                  cudaDeviceSynchronize},
+    moredirectives={__global__, __shared__, __device__, __host__},
+    %% to handle kernel invocation (treat as keyword)
+    literate=*{<<<}{\bgroup\bfseries<<<\egroup}{3} {>>>}{\bgroup\bfseries>>>\egroup}{3}
+}
+\lstdefinelanguage{julia}{
+    morekeywords={map,reduce,filter,end,Array,Int,function,length,size,ndims,reshape,collect,all,eachindex,for},
+    sensitive=true,%
+    alsoother={\$},%
+    morecomment=[l]\#,%
+    morecomment=[n]{\#=}{=\#},%
+    morestring=[s]{"}{"},%
+    morestring=[m]{'}{'},%
+}[keywords,comments,strings]%
+
+\lstdefinelanguage{FuncLang}
+{
+    keywords={Int,Float,Double,Bool,%
+              imap, reduce, if, then, else, letrec, in,%
+              filter},
+    sensitive=true,
+    showstringspaces=false,
+    morecomment=[l]{;},
+}
+
+\lstdefinestyle{nonumbers}{numbers=none}
+
+% track listing line number, control in-line
+\makeatletter
+\let\orig@lstnumber=\thelstnumber
+\newcommand\lstsetnumber[1]{\gdef\thelstnumber{#1}}
+\newcommand\lstresetnumber{\global\let\thelstnumber=\orig@lstnumber}
+\makeatother
+
+% set default lstlisting settings
+\lstset{%
+    basicstyle=\normalsize\ttfamily,
+    commentstyle=\rmfamily\itshape,
+    basewidth=.5em,
+    %aboveskip=0pt,
+    %belowskip=1.2ex,
+    %lineskip=-0.3ex,
+    numbers=left,
+    captionpos=b,
+    xleftmargin=5mm,
+    xrightmargin=5mm,
+    mathescape,
+    upquote=true,
+    % on a case per case basis we will have to change this
+    escapechar=\%,
+}
+
+%% create specific code environment
+\lstnewenvironment{saclang}[1][]{\lstset{language=SaC,#1}}{}
+\lstnewenvironment{cudalang}[1][]{\lstset{language=CUDA,#1}}{}
+\newcommand{\cudai}[1]{\lstinline[language=CUDA]|#1|}
+%\newcommand{\cudai}[1]{\texttt{#1}}
+\newcommand{\saci}[1]{\lstinline[language=SaC]|#1|}
+\newcommand{\textbftt}[1]{\textbf{\texttt{#1}}}
